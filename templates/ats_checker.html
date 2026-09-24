@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATS Checker | CareerAI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: #ffffff;
+            border-bottom: 1px solid #e7eaf0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 45px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 700;
+            color: #243b8f;
+        }
+
+        .page-label {
+            color: #667085;
+            font-size: 14px;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 1180px;
+            margin: 38px auto 60px;
+        }
+
+        .page-heading {
+            margin-bottom: 28px;
+        }
+
+        .page-heading h1 {
+            font-size: 30px;
+            font-weight: 700;
+            color: #182230;
+            margin-bottom: 7px;
+        }
+
+        .page-heading p {
+            color: #667085;
+            font-size: 15px;
+        }
+
+        /* MESSAGE */
+
+        .message {
+            background: #fff4f4;
+            border: 1px solid #ffd6d6;
+            color: #b42318;
+            padding: 15px 18px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            font-size: 14px;
+        }
+
+        /* ANALYZER */
+
+        .analyzer-card {
+            background: #ffffff;
+            border: 1px solid #e5e8ef;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 3px 12px rgba(16, 24, 40, 0.04);
+            margin-bottom: 25px;
+        }
+
+        .analyzer-card h2 {
+            font-size: 19px;
+            color: #182230;
+            margin-bottom: 8px;
+        }
+
+        .analyzer-card p {
+            color: #667085;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .analyze-btn {
+            margin-top: 22px;
+            background: #243b8f;
+            color: #ffffff;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .analyze-btn:hover {
+            background: #1d3279;
+        }
+
+        /* SCORE */
+
+        .top-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 22px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e8ef;
+            border-radius: 12px;
+            padding: 26px;
+            box-shadow: 0 3px 12px rgba(16, 24, 40, 0.04);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 650;
+            color: #182230;
+            margin-bottom: 20px;
+        }
+
+        .score-area {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .score-circle {
+            width: 135px;
+            height: 135px;
+            border-radius: 50%;
+            border: 10px solid #e8ecf8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .score-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #243b8f;
+        }
+
+        .score-total {
+            color: #98a2b3;
+            font-size: 11px;
+        }
+
+        .score-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #243b8f;
+            margin-bottom: 7px;
+        }
+
+        .score-text {
+            color: #667085;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* SCORE BREAKDOWN */
+
+        .breakdown {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .breakdown-item {
+            background: #f8f9fc;
+            border: 1px solid #edf0f5;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .breakdown-name {
+            color: #667085;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .breakdown-score {
+            font-size: 21px;
+            font-weight: 700;
+            color: #243b8f;
+        }
+
+        /* METRICS */
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .metric {
+            background: #ffffff;
+            border: 1px solid #e5e8ef;
+            border-radius: 10px;
+            padding: 19px;
+            box-shadow: 0 3px 12px rgba(16, 24, 40, 0.04);
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #243b8f;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #667085;
+            font-size: 12px;
+        }
+
+        /* TWO COLUMN */
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin-bottom: 22px;
+        }
+
+        /* STATUS */
+
+        .status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: #f8f9fc;
+            border: 1px solid #edf0f5;
+            border-radius: 7px;
+        }
+
+        .status-name {
+            color: #344054;
+            font-size: 13px;
+        }
+
+        .status-good {
+            color: #067647;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-missing {
+            color: #b42318;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* KEYWORDS */
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword {
+            background: #eef2ff;
+            color: #3447a8;
+            border: 1px solid #dce3ff;
+            padding: 7px 11px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .missing-keyword {
+            background: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
+            padding: 7px 11px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .empty-text {
+            color: #98a2b3;
+            font-size: 13px;
+        }
+
+        /* SUGGESTIONS */
+
+        .suggestion {
+            padding: 12px 14px;
+            background: #fffaf0;
+            border-left: 3px solid #f79009;
+            margin-bottom: 9px;
+            color: #667085;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .warning {
+            padding: 12px 14px;
+            background: #fff4f4;
+            border-left: 3px solid #f04438;
+            margin-bottom: 9px;
+            color: #667085;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .success {
+            padding: 13px 15px;
+            background: #f0fdf4;
+            border-left: 3px solid #12b76a;
+            color: #067647;
+            font-size: 13px;
+        }
+
+        /* ACTION VERBS */
+
+        .verb {
+            display: inline-block;
+            background: #f0fdf4;
+            color: #067647;
+            border: 1px solid #bbf7d0;
+            padding: 7px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin: 3px;
+        }
+
+        /* FOOTER */
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+            color: #243b8f;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .top-grid,
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .page-heading h1 {
+                font-size: 25px;
+            }
+
+            .metrics-grid,
+            .breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .score-area {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+            CareerAI
+        </div>
+
+        <div class="page-label">
+            ATS Resume Checker
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-heading">
+
+            <h1>ATS Resume Checker</h1>
+
+            <p>
+                Analyze your resume for ATS compatibility, keyword coverage,
+                resume structure and content quality.
+            </p>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        {% if message %}
+
+        <div class="message">
+            {{ message }}
+        </div>
+
+        {% endif %}
+
+
+        <!-- ANALYZER -->
+
+        <section class="analyzer-card">
+
+            <h2>Resume Compatibility Analysis</h2>
+
+            <p>
+                CareerAI analyzes your latest uploaded resume using
+                multiple ATS-focused checks. No external API is required.
+            </p>
+
+            <form method="POST">
+
+    <label style="
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #344054;
+    ">
+        Job Description
+        <span style="
+            color: #98a2b3;
+            font-weight: 400;
+        ">
+            (Optional)
+        </span>
+    </label>
+
+    <textarea
+        name="job_description"
+        placeholder="Paste the job description here to check how well your resume matches the job..."
+        rows="7"
+        style="
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 13px;
+            color: #344054;
+            outline: none;
+            line-height: 1.6;
+        "
+    ></textarea>
+
+    <button type="submit" class="analyze-btn">
+        Analyze Resume
+    </button>
+
+</form>
+
+        </section>
+
+
+        {% if result %}
+
+        <!-- JOB DESCRIPTION MATCH -->
+{% if result and result.job_description_provided %}
+
+<style>
+    .job-match-section {
+        margin-top: 24px;
+        padding: 24px;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        background: #ffffff;
+    }
+
+    .job-match-title {
+        margin: 0 0 6px 0;
+        font-size: 22px;
+        font-weight: 700;
+        color: #111827;
+    }
+
+    .job-match-subtitle {
+        margin: 0 0 22px 0;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .job-match-score-box {
+        padding: 22px;
+        border-radius: 14px;
+        background: #f8fafc;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .job-match-score {
+        font-size: 42px;
+        font-weight: 800;
+        color: #2563eb;
+        line-height: 1.2;
+    }
+
+    .job-match-label {
+        margin-top: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .job-match-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .job-keyword-box {
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #fafafa;
+    }
+
+    .job-keyword-box h3 {
+        margin: 0 0 14px 0;
+        font-size: 16px;
+        color: #111827;
+    }
+
+    .job-keywords {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .job-keyword {
+        display: inline-block;
+        padding: 7px 11px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .job-keyword.matched {
+        background: #ecfdf5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+    }
+
+    .job-keyword.missing {
+        background: #fff7ed;
+        color: #c2410c;
+        border: 1px solid #fed7aa;
+    }
+
+    .job-empty {
+        margin: 0;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+        .job-match-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="job-match-section">
+
+    <h2 class="job-match-title">
+        Job Description Match
+    </h2>
+
+    <p class="job-match-subtitle">
+        Resume compatibility based on keywords found in the provided job description.
+    </p>
+
+    <div class="job-match-score-box">
+
+        <div class="job-match-score">
+            {{ result.job_match_score }}%
+        </div>
+
+        <div class="job-match-label">
+            {{ result.job_match_label }}
+        </div>
+
+    </div>
+
+    <div class="job-match-grid">
+
+        <div class="job-keyword-box">
+
+            <h3>Matched Keywords</h3>
+
+            {% if result.matched_job_keywords %}
+
+                <div class="job-keywords">
+
+                    {% for keyword in result.matched_job_keywords %}
+
+                        <span class="job-keyword matched">
+                            {{ keyword }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="job-empty">
+                    No matching keywords detected.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="job-keyword-box">
+
+            <h3>Missing Keywords</h3>
+
+            {% if result.missing_job_keywords %}
+
+                <div class="job-keywords">
+
+                    {% for keyword in result.missing_job_keywords %}
+
+                        <span class="job-keyword missing">
+                            {{ keyword }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="job-empty">
+                    No important job keywords appear to be missing.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+        <!-- SCORE + BREAKDOWN -->
+
+        <div class="top-grid">
+
+            <section class="card">
+
+                <div class="card-title">
+                    Overall ATS Score
+                </div>
+
+                <div class="score-area">
+
+                    <div class="score-circle">
+
+                        <div class="score-number">
+                            {{ result.score }}
+                        </div>
+
+                        <div class="score-total">
+                            OUT OF 100
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="score-label">
+                            {{ result.score_label }}
+                        </div>
+
+                        <div class="score-text">
+                            Your resume has been evaluated across
+                            multiple ATS compatibility factors.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="card">
+
+                <div class="card-title">
+                    Score Breakdown
+                </div>
+
+                <div class="breakdown">
+
+                    <div class="breakdown-item">
+
+                        <div class="breakdown-name">
+                            Contact Information
+                        </div>
+
+                        <div class="breakdown-score">
+                            {{ result.contact_score }}/14
+                        </div>
+
+                    </div>
+
+
+                    <div class="breakdown-item">
+
+                        <div class="breakdown-name">
+                            Resume Sections
+                        </div>
+
+                        <div class="breakdown-score">
+                            {{ result.section_score }}/25
+                        </div>
+
+                    </div>
+
+
+                    <div class="breakdown-item">
+
+                        <div class="breakdown-name">
+                            Keywords
+                        </div>
+
+                        <div class="breakdown-score">
+                            {{ result.keyword_score }}/20
+                        </div>
+
+                    </div>
+
+
+                    <div class="breakdown-item">
+
+                        <div class="breakdown-name">
+                            Action Verbs
+                        </div>
+
+                        <div class="breakdown-score">
+                            {{ result.action_verb_score }}/10
+                        </div>
+
+                    </div>
+
+
+                    <div class="breakdown-item">
+
+                        <div class="breakdown-name">
+                            Resume Length
+                        </div>
+
+                        <div class="breakdown-score">
+                            {{ result.length_score }}/10
+                        </div>
+
+                    </div>
+
+
+                    <div class="breakdown-item">
+
+                        <div class="breakdown-name">
+                            ATS Formatting
+                        </div>
+
+                        <div class="breakdown-score">
+                            {{ result.formatting_score }}/10
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- METRICS -->
+
+        <div class="metrics-grid">
+
+            <div class="metric">
+
+                <div class="metric-value">
+                    {{ result.word_count }}
+                </div>
+
+                <div class="metric-label">
+                    Resume Words
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-value">
+                    {{ result.detected_keywords|length }}
+                </div>
+
+                <div class="metric-label">
+                    Technical Keywords
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-value">
+                    {{ result.sections_found }}/{{ result.total_sections }}
+                </div>
+
+                <div class="metric-label">
+                    Resume Sections
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-value">
+                    {{ result.detected_action_verbs|length }}
+                </div>
+
+                <div class="metric-label">
+                    Action Verbs
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTACT + SECTIONS -->
+
+        <div class="two-column">
+
+            <section class="card">
+
+                <div class="card-title">
+                    Contact Information
+                </div>
+
+                <div class="status-list">
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            Email Address
+                        </span>
+
+                        {% if result.email_found %}
+                        <span class="status-good">Detected</span>
+                        {% else %}
+                        <span class="status-missing">Missing</span>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            Phone Number
+                        </span>
+
+                        {% if result.phone_found %}
+                        <span class="status-good">Detected</span>
+                        {% else %}
+                        <span class="status-missing">Missing</span>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            LinkedIn
+                        </span>
+
+                        {% if result.linkedin_found %}
+                        <span class="status-good">Detected</span>
+                        {% else %}
+                        <span class="status-missing">Not Detected</span>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            GitHub
+                        </span>
+
+                        {% if result.github_found %}
+                        <span class="status-good">Detected</span>
+                        {% else %}
+                        <span class="status-missing">Not Detected</span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="card">
+
+                <div class="card-title">
+                    Resume Sections
+                </div>
+
+                <div class="status-list">
+
+                    {% for section, found in result.section_status.items() %}
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            {{ section }}
+                        </span>
+
+                        {% if found %}
+                        <span class="status-good">Detected</span>
+                        {% else %}
+                        <span class="status-missing">Missing</span>
+                        {% endif %}
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- KEYWORDS -->
+
+        <div class="two-column">
+
+            <section class="card">
+
+                <div class="card-title">
+                    Detected Technical Skills
+                </div>
+
+                {% if result.detected_keywords %}
+
+                <div class="keywords">
+
+                    {% for keyword in result.detected_keywords %}
+
+                    <span class="keyword">
+                        {{ keyword }}
+                    </span>
+
+                    {% endfor %}
+
+                </div>
+
+                {% else %}
+
+                <p class="empty-text">
+                    No major technical keywords were detected.
+                </p>
+
+                {% endif %}
+
+            </section>
+
+
+            <section class="card">
+
+                <div class="card-title">
+                    Suggested Keywords
+                </div>
+
+                {% if result.missing_keywords %}
+
+                <div class="keywords">
+
+                    {% for keyword in result.missing_keywords %}
+
+                    <span class="missing-keyword">
+                        {{ keyword }}
+                    </span>
+
+                    {% endfor %}
+
+                </div>
+
+                {% else %}
+
+                <div class="success">
+                    Good keyword coverage detected.
+                </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+
+        <!-- ACTION VERBS + LENGTH -->
+
+        <div class="two-column">
+
+            <section class="card">
+
+                <div class="card-title">
+                    Action Verbs
+                </div>
+
+                {% if result.detected_action_verbs %}
+
+                    {% for verb in result.detected_action_verbs %}
+
+                    <span class="verb">
+                        {{ verb }}
+                    </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                <p class="empty-text">
+                    No strong action verbs detected.
+                </p>
+
+                {% endif %}
+
+            </section>
+
+
+            <section class="card">
+
+                <div class="card-title">
+                    Resume Length
+                </div>
+
+                <div class="status-list">
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            Word Count
+                        </span>
+
+                        <span class="status-good">
+                            {{ result.word_count }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            Length Status
+                        </span>
+
+                        {% if result.length_status == "Good" %}
+
+                        <span class="status-good">
+                            Good
+                        </span>
+
+                        {% else %}
+
+                        <span class="status-missing">
+                            {{ result.length_status }}
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span class="status-name">
+                            Formatting
+                        </span>
+
+                        {% if result.formatting_status == "Good" %}
+
+                        <span class="status-good">
+                            Good
+                        </span>
+
+                        {% else %}
+
+                        <span class="status-missing">
+                            Needs Attention
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- WARNINGS + SUGGESTIONS -->
+
+        <div class="two-column">
+
+            <section class="card">
+
+                <div class="card-title">
+                    ATS Warnings
+                </div>
+
+                {% if result.warnings %}
+
+                    {% for warning in result.warnings %}
+
+                    <div class="warning">
+                        {{ warning }}
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                <div class="success">
+                    No major ATS warnings were detected.
+                </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <section class="card">
+
+                <div class="card-title">
+                    Improvement Suggestions
+                </div>
+
+                {% if result.suggestions %}
+
+                    {% for suggestion in result.suggestions %}
+
+                    <div class="suggestion">
+                        {{ suggestion }}
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                <div class="success">
+                    Your resume passed the current ATS checks.
+                </div>
+
+                {% endif %}
+
+            </section>
+
+        </div>
+
+        {% endif %}
+
+
+        <a href="{{ url_for('dashboard') }}" class="back-link">
+            ← Back to Dashboard
+        </a>
+
+    </main>
+
+</body>
+
+</html>

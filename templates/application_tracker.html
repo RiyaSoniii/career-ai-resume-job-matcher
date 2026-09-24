@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Application Tracker | CareerAI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logout {
+            padding: 9px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .add-box,
+        .applications {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .add-box h2,
+        .applications h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 14px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        th {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .saved {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .applied {
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+        .interview {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .selected {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .rejected {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 900px) {
+
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .container {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        CareerAI
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('logout') }}" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    <div class="header">
+
+        <h1>Application Tracker</h1>
+
+        <p>
+            Track your job applications and monitor your application progress.
+        </p>
+
+    </div>
+
+
+    <!-- ADD APPLICATION -->
+
+    <section class="add-box">
+
+        <h2>
+            Add New Application
+        </h2>
+
+        <form method="POST">
+
+            <div class="form-grid">
+
+                <input
+                    type="text"
+                    name="company"
+                    placeholder="Company name"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="job_role"
+                    placeholder="Job role"
+                    required
+                >
+
+                <select name="status">
+
+                    <option value="Saved">Saved</option>
+
+                    <option value="Applied">Applied</option>
+
+                    <option value="Interview">Interview</option>
+
+                    <option value="Selected">Selected</option>
+
+                    <option value="Rejected">Rejected</option>
+
+                </select>
+
+                <input
+                    type="date"
+                    name="applied_date"
+                >
+
+                <button type="submit">
+                    Add Application
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- APPLICATION LIST -->
+
+    <section class="applications">
+
+        <h2>
+            Your Applications
+        </h2>
+
+        {% if applications %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Company</th>
+                        <th>Job Role</th>
+                        <th>Status</th>
+                        <th>Applied Date</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for application in applications %}
+
+                    <tr>
+
+                        <td>
+                            {{ application["company"] }}
+                        </td>
+
+                        <td>
+                            {{ application["job_role"] }}
+                        </td>
+
+                        <td>
+
+                            <span class="status {{ application['status'].lower() }}">
+
+                                {{ application["status"] }}
+
+                            </span>
+
+                        </td>
+
+                        <td>
+                            {{ application["applied_date"] or "—" }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+
+            No applications added yet.
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Job Recommendations | CareerAI</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+        color: #1f2937;
+    }
+
+    .navbar {
+        height: 70px;
+        background: white;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 35px;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2563eb;
+    }
+
+    .back {
+        text-decoration: none;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 9px 15px;
+        border: 1px solid #d1d5db;
+        border-radius: 7px;
+    }
+
+    .back:hover {
+        background: #f3f4f6;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 35px;
+    }
+
+    .header {
+        margin-bottom: 30px;
+    }
+
+    .header h1 {
+        font-size: 30px;
+        margin-bottom: 8px;
+    }
+
+    .header p {
+        color: #6b7280;
+        line-height: 1.6;
+    }
+
+    .message {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        color: #6b7280;
+    }
+
+    .jobs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .job-card {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 24px;
+    }
+
+    .job-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .job-title {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .company {
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .score {
+        min-width: 72px;
+        text-align: center;
+        padding: 8px 10px;
+        border-radius: 20px;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .description {
+        color: #6b7280;
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 18px;
+    }
+
+    .section-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 9px;
+    }
+
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 16px;
+    }
+
+    .skill {
+        padding: 6px 9px;
+        border-radius: 6px;
+        font-size: 12px;
+    }
+
+    .matched {
+        background: #ecfdf5;
+        color: #047857;
+    }
+
+    .missing {
+        background: #fff7ed;
+        color: #c2410c;
+    }
+
+    .empty {
+        color: #9ca3af;
+        font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+        .jobs {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .navbar {
+            padding: 0 18px;
+        }
+
+        .container {
+            padding: 22px;
+        }
+
+        .header h1 {
+            font-size: 25px;
+        }
+    }
+</style>
+
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+
+<div class="logo">
+    CareerAI
+</div>
+
+<a href="{{ url_for('dashboard') }}" class="back">
+    ← Dashboard
+</a>
+
+
+</nav>
+
+<main class="container">
+
+
+<div class="header">
+
+    <h1>Job Recommendations</h1>
+
+    <p>
+        Based on the skills detected in your latest resume,
+        here are some suitable job roles.
+    </p>
+
+</div>
+
+
+{% if message %}
+
+    <div class="message">
+        {{ message }}
+    </div>
+
+{% elif recommendations %}
+
+    <section class="jobs">
+
+        {% for job in recommendations %}
+
+            <div class="job-card">
+
+                <div class="job-top">
+
+                    <div>
+
+                        <h2 class="job-title">
+                            {{ job.title }}
+                        </h2>
+
+                        <div class="company">
+                            {{ job.company }}
+                        </div>
+
+                    </div>
+
+                    <div class="score">
+                        {{ job.match_score }}% Match
+                    </div>
+
+                </div>
+
+
+                <p class="description">
+                    {{ job.description }}
+                </p>
+
+
+                <div class="section-title">
+                    Matched Skills
+                </div>
+
+                <div class="skills">
+
+                    {% if job.matched_skills %}
+
+                        {% for skill in job.matched_skills %}
+
+                            <span class="skill matched">
+                                {{ skill }}
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="empty">
+                            No matching skills detected
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="section-title">
+                    Skills to Improve
+                </div>
+
+                <div class="skills">
+
+                    {% if job.missing_skills %}
+
+                        {% for skill in job.missing_skills %}
+
+                            <span class="skill missing">
+                                {{ skill }}
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="empty">
+                            No major skill gap detected
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+{% else %}
+
+    <div class="message">
+        No job recommendations available yet.
+    </div>
+
+{% endif %}
+
+
+</main>
+
+</body>
+</html>

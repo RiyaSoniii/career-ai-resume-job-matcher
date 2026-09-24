@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Roadmap | CareerAI</title>
+
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7fb;
+        color: #172033;
+        min-height: 100vh;
+    }
+
+    .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e5eaf1;
+        padding: 18px 6%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .brand {
+        font-size: 22px;
+        font-weight: 700;
+        color: #172b4d;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: #40516d;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 9px 16px;
+        border: 1px solid #d9e0ea;
+        border-radius: 8px;
+        background: #ffffff;
+    }
+
+    .back-btn:hover {
+        background: #f1f5f9;
+    }
+
+    .container {
+        width: 88%;
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 42px 0 60px;
+    }
+
+    .hero {
+        background: #ffffff;
+        border: 1px solid #e3e8f0;
+        border-radius: 18px;
+        padding: 34px;
+        margin-bottom: 24px;
+        box-shadow: 0 5px 18px rgba(24, 39, 75, 0.06);
+    }
+
+    .eyebrow {
+        color: #3267d6;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+        color: #172b4d;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        color: #68758a;
+        font-size: 15px;
+        line-height: 1.7;
+        max-width: 700px;
+    }
+
+    .role-form {
+        margin-top: 25px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .role-select {
+        flex: 1;
+        min-width: 250px;
+        padding: 13px 15px;
+        border: 1px solid #ccd5e2;
+        border-radius: 9px;
+        background: #ffffff;
+        color: #26364f;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .role-select:focus {
+        border-color: #3267d6;
+    }
+
+    .generate-btn {
+        border: none;
+        border-radius: 9px;
+        padding: 13px 24px;
+        background: #3267d6;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .generate-btn:hover {
+        background: #2858bd;
+    }
+
+    .selected-role {
+        margin-top: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #edf3ff;
+        color: #2858bd;
+        border: 1px solid #d4e1ff;
+        padding: 9px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .overview {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+
+    .overview-card {
+        background: #ffffff;
+        border: 1px solid #e3e8f0;
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 4px 14px rgba(24, 39, 75, 0.04);
+    }
+
+    .overview-label {
+        color: #748198;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        margin-bottom: 9px;
+    }
+
+    .overview-value {
+        color: #172b4d;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+    .overview-sub {
+        color: #8792a5;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .roadmap-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-bottom: 18px;
+    }
+
+    .roadmap-heading h2 {
+        color: #172b4d;
+        font-size: 23px;
+    }
+
+    .roadmap-heading p {
+        color: #7a879b;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 58px;
+    }
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 20px;
+        top: 10px;
+        bottom: 20px;
+        width: 2px;
+        background: #dbe3ef;
+    }
+
+    .roadmap-item {
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .step-number {
+        position: absolute;
+        left: -58px;
+        top: 20px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #3267d6;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 800;
+        border: 5px solid #f4f7fb;
+        box-shadow: 0 0 0 1px #d4def0;
+        z-index: 2;
+    }
+
+    .roadmap-card {
+        background: #ffffff;
+        border: 1px solid #e0e6ef;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 16px rgba(24, 39, 75, 0.05);
+    }
+
+    .card-header {
+        padding: 21px 24px;
+        border-bottom: 1px solid #edf0f5;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .skill-title {
+        color: #172b4d;
+        font-size: 20px;
+        font-weight: 800;
+        margin-bottom: 6px;
+    }
+
+    .skill-subtitle {
+        color: #7a879b;
+        font-size: 12px;
+    }
+
+    .priority {
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .priority-high {
+        background: #fff0f0;
+        color: #c23b3b;
+    }
+
+    .priority-medium {
+        background: #fff7e6;
+        color: #a96b00;
+    }
+
+    .priority-low {
+        background: #eef8f1;
+        color: #2f7b48;
+    }
+
+    .card-meta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 16px 24px 0;
+    }
+
+    .meta-box {
+        background: #f6f8fb;
+        border: 1px solid #e7ebf1;
+        border-radius: 8px;
+        padding: 8px 12px;
+        color: #536178;
+        font-size: 12px;
+    }
+
+    .meta-box strong {
+        color: #253653;
+    }
+
+    .card-body {
+        padding: 22px 24px 25px;
+    }
+
+    .section {
+        margin-bottom: 20px;
+    }
+
+    .section:last-child {
+        margin-bottom: 0;
+    }
+
+    .section-title {
+        color: #253653;
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 11px;
+    }
+
+    .topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .topic {
+        background: #f1f5fb;
+        border: 1px solid #dfe6f1;
+        color: #465771;
+        padding: 7px 11px;
+        border-radius: 7px;
+        font-size: 12px;
+    }
+
+    .info-box {
+        border: 1px solid #e3e8f0;
+        border-radius: 9px;
+        padding: 13px 15px;
+        color: #58667c;
+        font-size: 13px;
+        line-height: 1.6;
+        background: #fafbfd;
+    }
+
+    .project-box {
+        background: #f1f6ff;
+        border: 1px solid #d8e5ff;
+        border-radius: 9px;
+        padding: 14px 15px;
+        color: #31558f;
+        font-size: 13px;
+        line-height: 1.6;
+        font-weight: 600;
+    }
+
+    .progress-section {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid #edf0f5;
+    }
+
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        color: #7b8799;
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .progress-bar {
+        height: 7px;
+        background: #e9edf3;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: #3267d6;
+        border-radius: 10px;
+    }
+
+    .empty-state {
+        background: #ffffff;
+        border: 1px solid #e2e7ef;
+        border-radius: 15px;
+        padding: 45px 25px;
+        text-align: center;
+        box-shadow: 0 5px 16px rgba(24, 39, 75, 0.04);
+    }
+
+    .empty-state h3 {
+        color: #263956;
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .empty-state p {
+        color: #7c889a;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .message {
+        background: #edf8f0;
+        border: 1px solid #cce9d3;
+        color: #317044;
+        padding: 13px 16px;
+        border-radius: 9px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    @media (max-width: 800px) {
+        .container {
+            width: 92%;
+            padding-top: 25px;
+        }
+
+        .hero {
+            padding: 25px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+        }
+
+        .overview {
+            grid-template-columns: 1fr;
+        }
+
+        .timeline {
+            padding-left: 48px;
+        }
+
+        .step-number {
+            left: -48px;
+            width: 36px;
+            height: 36px;
+        }
+
+        .timeline::before {
+            left: 17px;
+        }
+
+        .card-header {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .topbar {
+            padding: 15px 4%;
+        }
+
+        .brand {
+            font-size: 18px;
+        }
+
+        .back-btn {
+            padding: 8px 11px;
+            font-size: 12px;
+        }
+
+        .container {
+            width: 94%;
+        }
+
+        .hero {
+            padding: 20px;
+        }
+
+        .role-form {
+            flex-direction: column;
+        }
+
+        .role-select,
+        .generate-btn {
+            width: 100%;
+        }
+
+        .card-header,
+        .card-body {
+            padding-left: 17px;
+            padding-right: 17px;
+        }
+
+        .card-meta {
+            padding-left: 17px;
+            padding-right: 17px;
+        }
+    }
+</style>
+
+
+</head>
+
+<body>
+
+
+<div class="topbar">
+    <div class="brand">CareerAI</div>
+    <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+</div>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="eyebrow">Career Development</div>
+
+        <h1>Learning Roadmap</h1>
+
+        <p>
+            Build the skills required for your target role through a structured,
+            resume-based learning path with focused practice and project work.
+        </p>
+
+        <form method="POST" class="role-form">
+            <select name="target_role" class="role-select" required>
+                <option value="">Select your target role</option>
+
+                {% for role in roles %}
+                    <option value="{{ role }}"
+                        {% if target_role == role %}selected{% endif %}>
+                        {{ role }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="generate-btn">
+                Generate Roadmap
+            </button>
+        </form>
+
+        {% if target_role %}
+            <div class="selected-role">
+                Target Role: {{ target_role }}
+            </div>
+        {% endif %}
+    </section>
+
+    {% if message %}
+        <div class="message">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    {% if roadmap %}
+
+        <section class="overview">
+
+            <div class="overview-card">
+                <div class="overview-label">Skills to Develop</div>
+                <div class="overview-value">{{ roadmap|length }}</div>
+                <div class="overview-sub">Based on your current resume</div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-label">Learning Path</div>
+                <div class="overview-value">{{ roadmap|length }} Steps</div>
+                <div class="overview-sub">Follow the roadmap in priority order</div>
+            </div>
+
+            <div class="overview-card">
+                <div class="overview-label">Current Progress</div>
+                <div class="overview-value">0%</div>
+                <div class="overview-sub">Start with Step 1</div>
+            </div>
+
+        </section>
+
+        <div class="roadmap-heading">
+            <div>
+                <h2>Your Personalized Roadmap</h2>
+                <p>Develop the missing skills one step at a time.</p>
+            </div>
+        </div>
+
+        <section class="timeline">
+
+            {% for item in roadmap %}
+
+                <div class="roadmap-item">
+
+                    <div class="step-number">
+                        {{ loop.index }}
+                    </div>
+
+                    <div class="roadmap-card">
+
+                        <div class="card-header">
+
+                            <div>
+                                <div class="skill-title">
+                                    {{ item.skill }}
+                                </div>
+
+                                <div class="skill-subtitle">
+                                    Skill development area
+                                </div>
+                            </div>
+
+                            {% if item.priority == "High" %}
+                                <div class="priority priority-high">
+                                    High Priority
+                                </div>
+                            {% elif item.priority == "Medium" %}
+                                <div class="priority priority-medium">
+                                    Medium Priority
+                                </div>
+                            {% else %}
+                                <div class="priority priority-low">
+                                    Low Priority
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="card-meta">
+
+                            <div class="meta-box">
+                                Level:
+                                <strong>{{ item.level }}</strong>
+                            </div>
+
+                            <div class="meta-box">
+                                Duration:
+                                <strong>{{ item.duration }}</strong>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="section">
+                                <div class="section-title">
+                                    What to Learn
+                                </div>
+
+                                <div class="topics">
+                                    {% for topic in item.topics %}
+                                        <span class="topic">
+                                            {{ topic }}
+                                        </span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title">
+                                    Practice
+                                </div>
+
+                                <div class="info-box">
+                                    {{ item.practice }}
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title">
+                                    Recommended Project
+                                </div>
+
+                                <div class="project-box">
+                                    {{ item.project }}
+                                </div>
+                            </div>
+
+                            <div class="progress-section">
+
+                                <div class="progress-label">
+                                    <span>Learning Progress</span>
+                                    <span>Not Started</span>
+                                </div>
+
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h3>Start Building Your Career Roadmap</h3>
+
+            <p>
+                Select your target role above and generate a personalized
+                learning plan based on the skills missing from your resume.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</main>
+
+
+</body>
+</html>

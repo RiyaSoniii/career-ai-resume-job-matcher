@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | CareerAI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =====================================
+           SIDEBAR
+        ===================================== */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 245px;
+            height: 100vh;
+
+            background: #111827;
+            color: white;
+
+            padding: 25px 16px 20px;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow-y: auto;
+
+            z-index: 1000;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #111827;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 10px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 0 10px;
+
+            margin-bottom: 35px;
+
+            flex-shrink: 0;
+        }
+
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+
+            background: #2563eb;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .nav-title {
+            color: #9ca3af;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            padding: 0 12px;
+
+            margin-bottom: 9px;
+
+            flex-shrink: 0;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+
+            gap: 3px;
+
+            margin-bottom: 20px;
+
+            flex-shrink: 0;
+        }
+
+        .nav a {
+            display: block;
+
+            color: #d1d5db;
+
+            padding: 10px 12px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.2s;
+        }
+
+        .nav a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .nav a.active {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .logout {
+            margin-top: auto;
+
+            padding-top: 14px;
+
+            border-top: 1px solid #374151;
+
+            flex-shrink: 0;
+        }
+
+        .logout a {
+            display: block;
+
+            padding: 11px 12px;
+
+            border-radius: 8px;
+
+            color: #d1d5db;
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition: 0.2s;
+        }
+
+        .logout a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        /* =====================================
+           MAIN
+        ===================================== */
+
+        .main {
+            margin-left: 245px;
+
+            min-height: 100vh;
+
+            background: #f5f7fb;
+        }
+
+        /* =====================================
+           TOP BAR
+        ===================================== */
+
+        .topbar {
+            min-height: 72px;
+
+            background: white;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 12px 35px;
+        }
+
+        .topbar-title {
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+        .user-box {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .user-text {
+            text-align: right;
+        }
+
+        .user-name {
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #111827;
+        }
+
+        .user-role {
+            font-size: 12px;
+
+            color: #6b7280;
+
+            margin-top: 3px;
+        }
+
+        /* EDIT PROFILE */
+
+        .edit-profile {
+            display: inline-block;
+
+            margin-top: 5px;
+
+            color: #2563eb;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .edit-profile:hover {
+            color: #1d4ed8;
+
+            text-decoration: underline;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #dbeafe;
+
+            color: #1d4ed8;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+        }
+
+        /* =====================================
+           CONTENT
+        ===================================== */
+
+        .content {
+            max-width: 1400px;
+
+            margin: auto;
+
+            padding: 32px 35px 45px;
+        }
+
+        .welcome {
+            margin-bottom: 28px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+
+            letter-spacing: -0.5px;
+
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* =====================================
+           STAT CARDS
+        ===================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 24px;
+        }
+
+        .stat {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 21px;
+
+            transition: 0.2s;
+        }
+
+        .stat:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 22px rgba(15, 23, 42, 0.05);
+        }
+
+        .stat-label {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 13px;
+        }
+
+        .stat-value {
+            font-size: 29px;
+
+            font-weight: 800;
+
+            color: #111827;
+        }
+
+        .stat-info {
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-top: 7px;
+        }
+
+        /* =====================================
+           OVERVIEW
+        ===================================== */
+
+        .overview {
+            display: grid;
+
+            grid-template-columns: 1.4fr 1fr;
+
+            gap: 18px;
+
+            margin-bottom: 32px;
+        }
+
+        .panel {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 24px;
+        }
+
+        .panel h2 {
+            font-size: 18px;
+
+            margin-bottom: 6px;
+        }
+
+        .panel-subtitle {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+        }
+
+        /* =====================================
+           STATUS
+        ===================================== */
+
+        .status-row {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-name {
+            color: #374151;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .status-value {
+            color: #2563eb;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        /* =====================================
+           QUICK ACTIONS
+        ===================================== */
+
+        .quick-actions {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .quick-action {
+            border: 1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 14px;
+
+            color: #111827;
+
+            transition: 0.2s;
+        }
+
+        .quick-action:hover {
+            border-color: #93c5fd;
+
+            background: #f8fbff;
+        }
+
+        .quick-action strong {
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+        .quick-action span {
+            color: #6b7280;
+
+            font-size: 11px;
+        }
+
+        /* =====================================
+           SECTION
+        ===================================== */
+
+        .section-header {
+            margin-bottom: 17px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+
+            margin-bottom: 5px;
+        }
+
+        .section-header p {
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        /* =====================================
+           MODULES
+        ===================================== */
+
+        .modules {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 16px;
+        }
+
+        .module {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            min-height: 190px;
+
+            transition: 0.2s;
+        }
+
+        .module:hover {
+            transform: translateY(-3px);
+
+            border-color: #bfdbfe;
+
+            box-shadow:
+                0 10px 25px rgba(15, 23, 42, 0.06);
+        }
+
+        .module-number {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 10px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            margin-bottom: 15px;
+        }
+
+        .module h3 {
+            font-size: 16px;
+
+            margin-bottom: 8px;
+        }
+
+        .module p {
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            margin-bottom: 18px;
+        }
+
+        .module a {
+            color: #2563eb;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .module a:hover {
+            color: #1d4ed8;
+        }
+
+        /* =====================================
+           RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 1100px) {
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main {
+                margin-left: 220px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modules {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .overview {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .topbar {
+                padding: 12px 20px;
+            }
+
+            .user-text {
+                display: none;
+            }
+
+            .content {
+                padding: 25px 20px 35px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .modules {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     SIDEBAR
+===================================== -->
+
+<aside class="sidebar">
+
+
+    <div class="brand">
+
+        <div class="brand-logo">
+            C
+        </div>
+
+        <div class="brand-name">
+            CareerAI
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Main
+    </div>
+
+
+    <div class="nav">
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="active"
+        >
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('resume_analyzer') }}">
+            Resume Analyzer
+        </a>
+
+        <a href="{{ url_for('recommendations') }}">
+            Job Recommendations
+        </a>
+
+        <a href="{{ url_for('applications') }}">
+            Application Tracker
+        </a>
+
+        <a href="{{ url_for('profile') }}">
+            Career Profile
+        </a>
+
+    </div>
+
+
+    <div class="nav-title">
+        Career Tools
+    </div>
+
+
+    <div class="nav">
+
+        <a href="{{ url_for('matcher') }}">
+            Job Matcher
+        </a>
+
+        <a href="{{ url_for('skill_gap') }}">
+            Skill Gap Analyzer
+        </a>
+
+        <a href="{{ url_for('roadmap') }}">
+            Learning Roadmap
+        </a>
+
+        <a href="{{ url_for('interview_prep') }}">
+            Interview Preparation
+        </a>
+
+        <a href="{{ url_for('ats_checker') }}">
+            ATS Checker
+        </a>
+
+    </div>
+
+
+    <div class="logout">
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =====================================
+     MAIN CONTENT
+===================================== -->
+
+<main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div class="topbar-title">
+            Career Management Platform
+        </div>
+
+
+        <div class="user-box">
+
+
+            <div class="user-text">
+
+                <div class="user-name">
+                    {{ session.get('name', 'User') }}
+                </div>
+
+                <div class="user-role">
+                    Career Dashboard
+                </div>
+
+                <!-- WORKING EDIT PROFILE -->
+
+                <a
+                    href="{{ url_for('profile') }}"
+                    class="edit-profile"
+                >
+                    Edit Profile
+                </a>
+
+            </div>
+
+
+            <div class="avatar">
+
+                {% set current_name = session.get('name', 'User') %}
+
+                {% if current_name %}
+                    {{ current_name[0]|upper }}
+                {% else %}
+                    U
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- PAGE CONTENT -->
+
+    <div class="content">
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <h1>
+                Welcome back, {{ session.get('name', 'User') }}
+            </h1>
+
+            <p>
+                Manage your resume, skills, applications and
+                career preparation from one centralized workspace.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             STATISTICS
+        ====================================== -->
+
+        <section class="stats">
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Resume Score
+                </div>
+
+                <div class="stat-value">
+
+                    {% if resume_score is not none %}
+                        {{ resume_score }}%
+                    {% else %}
+                        —
+                    {% endif %}
+
+                </div>
+
+                <div class="stat-info">
+                    Resume quality assessment
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Average Job Match
+                </div>
+
+                <div class="stat-value">
+
+                    {% if avg_match is not none %}
+                        {{ avg_match }}%
+                    {% else %}
+                        —
+                    {% endif %}
+
+                </div>
+
+                <div class="stat-info">
+                    Based on your job matches
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Skills Identified
+                </div>
+
+                <div class="stat-value">
+
+                    {% if skills_count is not none %}
+                        {{ skills_count }}
+                    {% else %}
+                        —
+                    {% endif %}
+
+                </div>
+
+                <div class="stat-info">
+                    Detected from your resume
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    Applications
+                </div>
+
+                <div class="stat-value">
+                    {{ applications_count|default(0) }}
+                </div>
+
+                <div class="stat-info">
+                    Applications being tracked
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =====================================
+             OVERVIEW
+        ====================================== -->
+
+        <section class="overview">
+
+
+            <div class="panel">
+
+                <h2>
+                    Career Overview
+                </h2>
+
+                <p class="panel-subtitle">
+                    Current status of your career preparation.
+                </p>
+
+
+                <div class="status-row">
+
+                    <span class="status-name">
+                        Resume Readiness
+                    </span>
+
+                    <span class="status-value">
+
+                        {% if resume_score is not none %}
+                            {{ resume_score }}%
+                        {% else %}
+                            Not analyzed
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span class="status-name">
+                        Job Compatibility
+                    </span>
+
+                    <span class="status-value">
+
+                        {% if avg_match is not none %}
+                            {{ avg_match }}%
+                        {% else %}
+                            No matches yet
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span class="status-name">
+                        Skills Detected
+                    </span>
+
+                    <span class="status-value">
+                        {{ skills_count|default(0) }}
+                    </span>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span class="status-name">
+                        Applications Tracked
+                    </span>
+
+                    <span class="status-value">
+                        {{ applications_count|default(0) }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+                <p class="panel-subtitle">
+                    Continue where you left off.
+                </p>
+
+
+                <div class="quick-actions">
+
+
+                    <a
+                        href="{{ url_for('resume_analyzer') }}"
+                        class="quick-action"
+                    >
+
+                        <strong>
+                            Analyze Resume
+                        </strong>
+
+                        <span>
+                            Review your resume
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('recommendations') }}"
+                        class="quick-action"
+                    >
+
+                        <strong>
+                            Find Jobs
+                        </strong>
+
+                        <span>
+                            View recommended roles
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('skill_gap') }}"
+                        class="quick-action"
+                    >
+
+                        <strong>
+                            Find Skill Gaps
+                        </strong>
+
+                        <span>
+                            Improve your skills
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('interview_prep') }}"
+                        class="quick-action"
+                    >
+
+                        <strong>
+                            Practice Interview
+                        </strong>
+
+                        <span>
+                            Start mock interview
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =====================================
+             CAREER TOOLS
+        ====================================== -->
+
+        <section>
+
+
+            <div class="section-header">
+
+                <h2>
+                    Career Tools
+                </h2>
+
+                <p>
+                    Tools designed to help you move from preparation
+                    to job application.
+                </p>
+
+            </div>
+
+
+            <div class="modules">
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Resume Analyzer
+                    </h3>
+
+                    <p>
+                        Analyze your resume and identify skills,
+                        education, projects and experience.
+                    </p>
+
+                    <a href="{{ url_for('resume_analyzer') }}">
+                        Analyze Resume →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Job Matcher
+                    </h3>
+
+                    <p>
+                        Compare your resume with a job description
+                        and measure compatibility.
+                    </p>
+
+                    <a href="{{ url_for('matcher') }}">
+                        Match Resume →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Skill Gap Analyzer
+                    </h3>
+
+                    <p>
+                        Identify missing skills required for
+                        your target career role.
+                    </p>
+
+                    <a href="{{ url_for('skill_gap') }}">
+                        Analyze Skill Gap →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Learning Roadmap
+                    </h3>
+
+                    <p>
+                        Follow a structured learning path based
+                        on your career goals and skill gaps.
+                    </p>
+
+                    <a href="{{ url_for('roadmap') }}">
+                        Start Learning →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Interview Preparation
+                    </h3>
+
+                    <p>
+                        Practice technical, HR and behavioral
+                        interview questions for your target role.
+                    </p>
+
+                    <a href="{{ url_for('interview_prep') }}">
+                        Start Mock Interview →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        06
+                    </div>
+
+                    <h3>
+                        ATS Checker
+                    </h3>
+
+                    <p>
+                        Check resume keywords, structure,
+                        readability and ATS compatibility.
+                    </p>
+
+                    <a href="{{ url_for('ats_checker') }}">
+                        Analyze ATS →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        07
+                    </div>
+
+                    <h3>
+                        Job Recommendations
+                    </h3>
+
+                    <p>
+                        Discover suitable job roles automatically
+                        using skills from your uploaded resume.
+                    </p>
+
+                    <a href="{{ url_for('recommendations') }}">
+                        View Recommendations →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        08
+                    </div>
+
+                    <h3>
+                        Application Tracker
+                    </h3>
+
+                    <p>
+                        Track saved, applied, interview, selected
+                        and rejected applications.
+                    </p>
+
+                    <a href="{{ url_for('applications') }}">
+                        Track Applications →
+                    </a>
+
+                </div>
+
+
+                <div class="module">
+
+                    <div class="module-number">
+                        09
+                    </div>
+
+                    <h3>
+                        Career Profile
+                    </h3>
+
+                    <p>
+                        View your career information, resume insights,
+                        skills and career progress.
+                    </p>
+
+                    <a href="{{ url_for('profile') }}">
+                        Open Career Profile →
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

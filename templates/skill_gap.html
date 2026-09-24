@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Skill Gap Analyzer | CareerAI</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+        background: #f6f8fc;
+        color: #0f172a;
+    }
+
+    /* NAVBAR */
+
+    .navbar {
+        height: 72px;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 55px;
+    }
+
+    .nav-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 23px;
+        font-weight: 800;
+        color: #2563eb;
+    }
+
+    .nav-title {
+        color: #64748b;
+        font-size: 14px;
+        margin-left: 18px;
+        padding-left: 18px;
+        border-left: 1px solid #e2e8f0;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: #475569;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .back-btn:hover {
+        color: #2563eb;
+    }
+
+    /* MAIN */
+
+    .container {
+        max-width: 1180px;
+        margin: 42px auto;
+        padding: 0 22px;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+    }
+
+    .eyebrow {
+        color: #2563eb;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    .page-header h1 {
+        font-size: 34px;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+    }
+
+    .page-header p {
+        color: #64748b;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    /* CARD */
+
+    .card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 18px;
+        padding: 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.045);
+    }
+
+    .card-title {
+        font-size: 19px;
+        font-weight: 750;
+        margin-bottom: 7px;
+    }
+
+    .card-subtitle {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 22px;
+        line-height: 1.6;
+    }
+
+    /* FORM */
+
+    .analysis-form {
+        display: grid;
+        grid-template-columns: 1fr 190px;
+        gap: 16px;
+        align-items: end;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #334155;
+    }
+
+    select {
+        width: 100%;
+        height: 48px;
+        padding: 0 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        background: #ffffff;
+        font-size: 14px;
+        color: #0f172a;
+        outline: none;
+    }
+
+    select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .analyze-btn {
+        height: 48px;
+        border: none;
+        border-radius: 10px;
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .analyze-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+    }
+
+    /* MESSAGE */
+
+    .message {
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #c2410c;
+        padding: 15px 18px;
+        border-radius: 12px;
+        margin-bottom: 22px;
+        font-size: 14px;
+    }
+
+    /* RESULT HEADER */
+
+    .result-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .role-label {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 8px;
+    }
+
+    .role-name {
+        font-size: 29px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .role-description {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 650px;
+    }
+
+    /* SCORE */
+
+    .score-box {
+        min-width: 190px;
+        padding: 25px;
+        text-align: center;
+        border: 1px solid #dbeafe;
+        background: #f8fbff;
+        border-radius: 16px;
+    }
+
+    .score-number {
+        font-size: 42px;
+        font-weight: 850;
+        color: #2563eb;
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    .score-label {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    /* STATS */
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 15px;
+        padding: 21px;
+        box-shadow: 0 5px 20px rgba(15, 23, 42, 0.03);
+    }
+
+    .stat-label {
+        color: #64748b;
+        font-size: 12px;
+        font-weight: 650;
+        margin-bottom: 10px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    .blue {
+        color: #2563eb;
+    }
+
+    .green {
+        color: #059669;
+    }
+
+    .red {
+        color: #dc2626;
+    }
+
+    .purple {
+        color: #7c3aed;
+    }
+
+    /* SIMPLE MATCH BAR */
+
+    .match-section {
+        margin-top: 25px;
+    }
+
+    .match-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 9px;
+    }
+
+    .match-title {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .match-value {
+        font-size: 13px;
+        font-weight: 800;
+        color: #2563eb;
+    }
+
+    .match-track {
+        width: 100%;
+        height: 10px;
+        background: #e8edf4;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .match-fill {
+        height: 100%;
+        background: #2563eb;
+        border-radius: 20px;
+        width: 0;
+    }
+
+    /* TWO COLUMN */
+
+    .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    /* SKILLS */
+
+    .skill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+    }
+
+    .skill {
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .matched {
+        background: #ecfdf5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+    }
+
+    .missing {
+        background: #fef2f2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+    }
+
+    .required {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+    }
+
+    .user {
+        background: #f5f3ff;
+        color: #6d28d9;
+        border: 1px solid #ddd6fe;
+    }
+
+    /* SECTION HEADER */
+
+    .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+
+    .section-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .icon-green {
+        background: #ecfdf5;
+        color: #059669;
+    }
+
+    .icon-red {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .icon-blue {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    .icon-purple {
+        background: #f5f3ff;
+        color: #7c3aed;
+    }
+
+    /* EMPTY */
+
+    .empty {
+        color: #64748b;
+        font-size: 13px;
+        padding: 12px 0;
+    }
+
+    /* INFO BOX */
+
+    .info-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 13px;
+        padding: 18px;
+        margin-top: 18px;
+    }
+
+    .info-title {
+        font-size: 13px;
+        font-weight: 750;
+        margin-bottom: 5px;
+    }
+
+    .info-text {
+        color: #64748b;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* FOOTER */
+
+    .footer-note {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 12px;
+        padding: 10px 0 35px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+
+        .navbar {
+            padding: 0 25px;
+        }
+
+        .result-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .score-box {
+            width: 100%;
+        }
+
+        .stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .analysis-form {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media (max-width: 650px) {
+
+        .page-header h1 {
+            font-size: 28px;
+        }
+
+        .stats {
+            grid-template-columns: 1fr;
+        }
+
+        .two-column {
+            grid-template-columns: 1fr;
+        }
+
+        .navbar {
+            padding: 0 18px;
+        }
+
+        .nav-title {
+            display: none;
+        }
+
+        .container {
+            margin-top: 28px;
+        }
+
+        .role-name {
+            font-size: 24px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="nav-left">
+
+        <div class="logo">
+            CareerAI
+        </div>
+
+        <div class="nav-title">
+            Skill Gap Analyzer
+        </div>
+
+    </div>
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back-btn">
+
+        ← Dashboard
+
+    </a>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div class="eyebrow">
+            Career Intelligence
+        </div>
+
+        <h1>
+            Skill Gap Analyzer
+        </h1>
+
+        <p>
+            Compare your resume skills with the requirements
+            of your target career and identify areas to improve.
+        </p>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+
+    {% if message %}
+
+    <div class="message">
+        {{ message }}
+    </div>
+
+    {% endif %}
+
+
+    <!-- ANALYSIS FORM -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Analyze Your Career Readiness
+        </div>
+
+        <div class="card-subtitle">
+            Select a target role and CareerAI will compare
+            it with the skills detected in your resume.
+        </div>
+
+        <form method="POST">
+
+            <div class="analysis-form">
+
+                <div class="form-group">
+
+                    <label for="target_role">
+                        Target Job Role
+                    </label>
+
+                    <select
+                        name="target_role"
+                        id="target_role"
+                        required>
+
+                        <option value="">
+                            Select your target role
+                        </option>
+
+                        <option value="Software Developer">
+                            Software Developer
+                        </option>
+
+                        <option value="Frontend Developer">
+                            Frontend Developer
+                        </option>
+
+                        <option value="Backend Developer">
+                            Backend Developer
+                        </option>
+
+                        <option value="Data Analyst">
+                            Data Analyst
+                        </option>
+
+                        <option value="Machine Learning Engineer">
+                            Machine Learning Engineer
+                        </option>
+
+                        <option value="Full Stack Developer">
+                            Full Stack Developer
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="analyze-btn">
+
+                    Analyze Skills
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    {% if result %}
+
+
+    <!-- RESULT OVERVIEW -->
+
+    <div class="card">
+
+        <div class="result-header">
+
+            <div>
+
+                <div class="role-label">
+                    Target Career
+                </div>
+
+                <div class="role-name">
+                    {{ result.target_role }}
+                </div>
+
+                <div class="role-description">
+                    Your resume has been compared with the
+                    required skills for this target role.
+                    Review the matched and missing skills below
+                    to understand your current career readiness.
+                </div>
+
+            </div>
+
+
+            <div class="score-box">
+
+                <div class="score-number">
+                    {{ result.match_percentage }}%
+                </div>
+
+                <div class="score-label">
+                    SKILL MATCH
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MATCH PROGRESS -->
+
+        <div class="match-section">
+
+            <div class="match-header">
+
+                <span class="match-title">
+                    Overall Skill Match
+                </span>
+
+                <span class="match-value">
+                    {{ result.match_percentage }}%
+                </span>
+
+            </div>
+
+            <div class="match-track">
+
+                <div
+                    class="match-fill"
+                    id="matchFill"
+                    data-score="{{ result.match_percentage }}">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Skills Matched
+            </div>
+
+            <div class="stat-value green">
+                {{ result.matched_skills|length }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Skills Missing
+            </div>
+
+            <div class="stat-value red">
+                {{ result.missing_skills|length }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Required Skills
+            </div>
+
+            <div class="stat-value blue">
+                {{ result.required_skills|length }}
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Skill Gap
+            </div>
+
+            <div class="stat-value purple">
+                {{ result.skill_gap }}%
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MATCHED + MISSING -->
+
+    <div class="two-column">
+
+
+        <!-- MATCHED -->
+
+        <div class="card">
+
+            <div class="section-heading">
+
+                <div class="section-icon icon-green">
+                    ✓
+                </div>
+
+                <div class="card-title">
+                    Matched Skills
+                </div>
+
+            </div>
+
+            <div class="card-subtitle">
+                Skills from your resume that match the selected
+                career requirements.
+            </div>
+
+
+            <div class="skill-grid">
+
+                {% if result.matched_skills %}
+
+                    {% for skill in result.matched_skills %}
+
+                    <span class="skill matched">
+                        ✓ {{ skill }}
+                    </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                <div class="empty">
+                    No matching skills detected.
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- MISSING -->
+
+        <div class="card">
+
+            <div class="section-heading">
+
+                <div class="section-icon icon-red">
+                    !
+                </div>
+
+                <div class="card-title">
+                    Missing Skills
+                </div>
+
+            </div>
+
+            <div class="card-subtitle">
+                Skills required for the target role that were not
+                detected in your resume.
+            </div>
+
+
+            <div class="skill-grid">
+
+                {% if result.missing_skills %}
+
+                    {% for skill in result.missing_skills %}
+
+                    <span class="skill missing">
+                        + {{ skill }}
+                    </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                <div class="empty">
+                    No major skill gaps detected.
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- REQUIRED SKILLS -->
+
+    <div class="card">
+
+        <div class="section-heading">
+
+            <div class="section-icon icon-blue">
+                R
+            </div>
+
+            <div class="card-title">
+                Role Skill Framework
+            </div>
+
+        </div>
+
+        <div class="card-subtitle">
+            Skills currently considered important for
+            {{ result.target_role }} in CareerAI.
+        </div>
+
+
+        <div class="skill-grid">
+
+            {% for skill in result.required_skills %}
+
+            <span class="skill required">
+                {{ skill }}
+            </span>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- USER RESUME SKILLS -->
+
+    <div class="card">
+
+        <div class="section-heading">
+
+            <div class="section-icon icon-purple">
+                CV
+            </div>
+
+            <div class="card-title">
+                Skills Detected From Your Resume
+            </div>
+
+        </div>
+
+        <div class="card-subtitle">
+            Skills extracted from your uploaded resume and
+            used for this analysis.
+        </div>
+
+
+        <div class="skill-grid">
+
+            {% if result.user_skills %}
+
+                {% for skill in result.user_skills %}
+
+                <span class="skill user">
+                    {{ skill }}
+                </span>
+
+                {% endfor %}
+
+            {% else %}
+
+            <div class="empty">
+                No skills were detected in your resume.
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="info-box">
+
+            <div class="info-title">
+                How to improve your match
+            </div>
+
+            <div class="info-text">
+
+                Focus on the skills listed under
+                <strong>Missing Skills</strong>.
+                Adding relevant skills through projects,
+                coursework and practical experience can help
+                strengthen your profile.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% endif %}
+
+
+    <div class="footer-note">
+
+        CareerAI Skill Intelligence • Resume-based career analysis
+
+    </div>
+
+</main>
+
+
+<!-- ONLY SIMPLE JAVASCRIPT FOR PROGRESS BAR -->
+
+<script>
+
+    const matchFill =
+        document.getElementById("matchFill");
+
+    if (matchFill) {
+
+        const score =
+            matchFill.getAttribute("data-score");
+
+        matchFill.style.width =
+            score + "%";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

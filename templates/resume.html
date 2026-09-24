@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Analyzer | CareerAI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .upload-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 35px;
+        }
+
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            padding: 45px 25px;
+            text-align: center;
+            background: #f8fafc;
+        }
+
+        .upload-area h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #2563eb;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .file-name {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .analyze-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .analyze-btn:hover {
+            background: #1f2937;
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eff6ff;
+            border-radius: 8px;
+            color: #1e40af;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        CareerAI
+    </div>
+
+    <a href="{{ url_for('dashboard') }}" class="back">
+        ← Dashboard
+    </a>
+
+</nav>
+
+
+<main class="container">
+
+    <div class="header">
+        <h1>Resume Analyzer</h1>
+
+        <p>
+            Upload your resume to analyze its skills, education,
+            experience and overall quality.
+        </p>
+    </div>
+
+
+    <div class="upload-box">
+
+        <form method="POST"
+              action="{{ url_for('resume_analyzer') }}"
+              enctype="multipart/form-data">
+
+            <div class="upload-area">
+
+                <h2>Upload your resume</h2>
+
+                <p>
+                    Supported formats: PDF and DOCX
+                </p>
+
+                <label for="resume" class="file-label">
+                    Choose Resume
+                </label>
+
+                <input
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    accept=".pdf,.docx"
+                    required
+                >
+
+                <div class="file-name" id="fileName">
+                    No file selected
+                </div>
+
+            </div>
+
+            <button type="submit" class="analyze-btn">
+                Analyze Resume
+            </button>
+
+        </form>
+
+
+        <div class="info">
+            Your resume will be analyzed for personal information,
+            education, skills, projects, experience, certifications
+            and resume quality.
+        </div>
+
+    </div>
+
+</main>
+
+
+<script>
+    const fileInput = document.getElementById("resume");
+    const fileName = document.getElementById("fileName");
+
+    fileInput.addEventListener("change", function () {
+
+        if (this.files.length > 0) {
+            fileName.textContent = this.files[0].name;
+        } else {
+            fileName.textContent = "No file selected";
+        }
+
+    });
+</script>
+
+</body>
+</html>

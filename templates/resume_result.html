@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Analysis | CareerAI</title>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", sans-serif;
+            background: #f6f8fb;
+            color: #172033;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e8ebf0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6%;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: #315efb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-icon svg {
+            width: 20px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #647085;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-link svg {
+            width: 17px;
+        }
+
+        /* PAGE */
+
+        .page {
+            max-width: 1100px;
+            margin: auto;
+            padding: 48px 25px 70px;
+        }
+
+        .header {
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #315efb;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .eyebrow svg {
+            width: 16px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            letter-spacing: -0.7px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #697386;
+            font-size: 14px;
+        }
+
+        /* SCORE */
+
+        .score-card {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 16px;
+            padding: 34px;
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            gap: 35px;
+            align-items: center;
+            box-shadow: 0 8px 30px rgba(20, 30, 55, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 165px;
+            height: 165px;
+            border-radius: 50%;
+            border: 10px solid #e9edff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .score-number {
+            font-size: 43px;
+            font-weight: 750;
+            color: #315efb;
+        }
+
+        .score-label {
+            color: #8a93a3;
+            font-size: 12px;
+        }
+
+        .score-content h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .score-content p {
+            color: #737d8f;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .score-note {
+            margin-top: 16px;
+            background: #f5f7ff;
+            border: 1px solid #e4e9ff;
+            border-radius: 9px;
+            padding: 12px 14px;
+            color: #52607a;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e7eaf0;
+            border-radius: 16px;
+            padding: 27px;
+            box-shadow: 0 6px 25px rgba(20, 30, 55, 0.04);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 20px;
+        }
+
+        .card-header svg {
+            width: 18px;
+            color: #315efb;
+        }
+
+        .card-header h2 {
+            font-size: 17px;
+        }
+
+        /* CONTACT */
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f5;
+            gap: 20px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #697386;
+            font-size: 13px;
+        }
+
+        .value {
+            font-weight: 600;
+            font-size: 13px;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        /* SKILLS */
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill {
+            padding: 7px 11px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #edf3ff;
+            color: #3157c8;
+            border: 1px solid #dbe5ff;
+        }
+
+        .empty {
+            color: #8a93a3;
+            font-size: 13px;
+        }
+
+        /* SECTIONS */
+
+        .section-list {
+            list-style: none;
+        }
+
+        .section-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px 0;
+            border-bottom: 1px solid #f0f2f5;
+            font-size: 13px;
+        }
+
+        .section-list li:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .present {
+            color: #18794e;
+        }
+
+        .missing {
+            color: #b54708;
+        }
+
+        .status svg {
+            width: 15px;
+        }
+
+        /* STRENGTHS */
+
+        .insight-list {
+            list-style: none;
+        }
+
+        .insight-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 10px 0;
+            color: #4d596d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .insight-list svg {
+            width: 16px;
+            min-width: 16px;
+            margin-top: 2px;
+            color: #18794e;
+        }
+
+        /* SUGGESTIONS */
+
+        .suggestion-list {
+            list-style: none;
+        }
+
+        .suggestion-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 10px 0;
+            color: #4d596d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .suggestion-list svg {
+            width: 16px;
+            min-width: 16px;
+            margin-top: 2px;
+            color: #b54708;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 11px 18px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn svg {
+            width: 16px;
+        }
+
+        .primary {
+            background: #315efb;
+            color: white;
+        }
+
+        .secondary {
+            background: white;
+            border: 1px solid #dce1e9;
+            color: #4d596d;
+        }
+
+        .primary:hover {
+            background: #244bd4;
+        }
+
+        .secondary:hover {
+            border-color: #315efb;
+            color: #315efb;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 750px) {
+
+            .score-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width: 500px) {
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i data-lucide="briefcase-business"></i>
+        </div>
+
+        CareerAI
+
+    </div>
+
+
+    <a href="{{ url_for('dashboard') }}" class="nav-link">
+
+        <i data-lucide="layout-dashboard"></i>
+
+        Dashboard
+
+    </a>
+
+</nav>
+
+
+<main class="page">
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="eyebrow">
+
+            <i data-lucide="file-check-2"></i>
+
+            Analysis Complete
+
+        </div>
+
+
+        <h1>Resume Analysis</h1>
+
+
+        <p>
+            Here's a detailed overview of your uploaded resume.
+        </p>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <section class="score-card">
+
+
+        <div class="score-circle">
+
+            <div class="score-number">
+                {{ analysis.score }}
+            </div>
+
+            <div class="score-label">
+                / 100
+            </div>
+
+        </div>
+
+
+        <div class="score-content">
+
+            <h2>Overall Resume Score</h2>
+
+            <p>
+                Your score is calculated using resume length,
+                contact information, detected technical skills,
+                and important resume sections.
+            </p>
+
+
+            <div class="score-note">
+
+                This is an ATS-style resume score based on
+                predefined resume quality checks. It is not a
+                prediction of hiring or interview selection.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN GRID -->
+
+    <section class="grid">
+
+
+        <!-- CONTACT INFORMATION -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <i data-lucide="contact"></i>
+
+                <h2>Contact Information</h2>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Email
+                </span>
+
+                <span class="value">
+                    {{ analysis.email }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Phone
+                </span>
+
+                <span class="value">
+                    {{ analysis.phone }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="label">
+                    Resume Words
+                </span>
+
+                <span class="value">
+                    {{ analysis.word_count }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- DETECTED SKILLS -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <i data-lucide="wrench"></i>
+
+                <h2>Detected Skills</h2>
+
+            </div>
+
+
+            {% if analysis.skills %}
+
+                <div class="skills">
+
+                    {% for skill in analysis.skills %}
+
+                        <span class="skill">
+                            {{ skill }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="empty">
+                    No predefined technical skills were detected.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- RESUME SECTIONS -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <i data-lucide="list-checks"></i>
+
+                <h2>Resume Sections</h2>
+
+            </div>
+
+
+            <ul class="section-list">
+
+                {% for section, present in analysis.sections.items() %}
+
+                    <li>
+
+                        <span>
+                            {{ section }}
+                        </span>
+
+
+                        {% if present %}
+
+                            <span class="status present">
+
+                                <i data-lucide="check-circle-2"></i>
+
+                                Present
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="status missing">
+
+                                <i data-lucide="circle-alert"></i>
+
+                                Missing
+
+                            </span>
+
+                        {% endif %}
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+        <!-- STRENGTHS -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <i data-lucide="badge-check"></i>
+
+                <h2>Resume Strengths</h2>
+
+            </div>
+
+
+            {% if analysis.strengths %}
+
+                <ul class="insight-list">
+
+                    {% for item in analysis.strengths %}
+
+                        <li>
+
+                            <i data-lucide="check"></i>
+
+                            <span>
+                                {{ item }}
+                            </span>
+
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <p class="empty">
+                    No major strengths detected yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- SUGGESTIONS -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <i data-lucide="lightbulb"></i>
+
+                <h2>Improvement Suggestions</h2>
+
+            </div>
+
+
+            {% if analysis.suggestions %}
+
+                <ul class="suggestion-list">
+
+                    {% for item in analysis.suggestions %}
+
+                        <li>
+
+                            <i data-lucide="arrow-up-right"></i>
+
+                            <span>
+                                {{ item }}
+                            </span>
+
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- NEXT STEPS -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <i data-lucide="rocket"></i>
+
+                <h2>Next Steps</h2>
+
+            </div>
+
+
+            <p style="color:#697386; line-height:1.7; font-size:13px;">
+
+                Improve the suggested areas and then compare
+                your resume with a specific job description
+                using the Job Matcher.
+
+            </p>
+
+
+            <div class="actions">
+
+                <a href="{{ url_for('matcher') }}"
+                   class="btn primary">
+
+                    <i data-lucide="target"></i>
+
+                    Match With Job
+
+                </a>
+
+
+                <a href="{{ url_for('resume_analyzer') }}"
+                   class="btn secondary">
+
+                    <i data-lucide="refresh-cw"></i>
+
+                    Analyze Another
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+    lucide.createIcons();
+
+</script>
+
+
+</body>
+
+</html>
