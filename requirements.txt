@@ -1,4 +1,5 @@
 Flask
 PyMuPDF
 python-docx
+scikit-learn
 gunicorn
